@@ -1,0 +1,101 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "coreclr",
+			"name": "MyProject|Editor.Windows.Debug|x64 (C#)",
+			"request": "launch",
+			"preLaunchTask": "MyProject|Editor.Windows.Debug|x64",
+			"cwd": "C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.7.6404\\Binaries\\Editor\\Win64\\Debug\\FlaxEditor",
+			"args": [
+				"-project",
+				"C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+				"-skipCompile"
+			],
+			"stopAtEntry": false,
+			"externalConsole": true
+		},
+		{
+			"type": "coreclr",
+			"name": "MyProject|Editor.Windows.Development|x64 (C#)",
+			"request": "launch",
+			"preLaunchTask": "MyProject|Editor.Windows.Development|x64",
+			"cwd": "C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.7.6404\\Binaries\\Editor\\Win64\\Development\\FlaxEditor",
+			"args": [
+				"-project",
+				"C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+				"-skipCompile"
+			],
+			"stopAtEntry": false,
+			"externalConsole": true
+		},
+		{
+			"type": "coreclr",
+			"name": "MyProject|Editor.Windows.Release|x64 (C#)",
+			"request": "launch",
+			"preLaunchTask": "MyProject|Editor.Windows.Release|x64",
+			"cwd": "C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.7.6404\\Binaries\\Editor\\Win64\\Release\\FlaxEditor",
+			"args": [
+				"-project",
+				"C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+				"-skipCompile"
+			],
+			"stopAtEntry": false,
+			"externalConsole": true
+		},
+		{
+			"type": "coreclr",
+			"name": "MyProject|Game.Windows.Debug|x64 (C#)",
+			"request": "launch",
+			"preLaunchTask": "MyProject|Game.Windows.Debug|x64",
+			"cwd": "C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.7.6404\\Binaries\\Editor\\Win64\\Debug\\FlaxEditor",
+			"args": [
+				"-project",
+				"C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+				"-skipCompile"
+			],
+			"stopAtEntry": false,
+			"externalConsole": true
+		},
+		{
+			"type": "coreclr",
+			"name": "MyProject|Game.Windows.Development|x64 (C#)",
+			"request": "launch",
+			"preLaunchTask": "MyProject|Game.Windows.Development|x64",
+			"cwd": "C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.7.6404\\Binaries\\Editor\\Win64\\Development\\FlaxEditor",
+			"args": [
+				"-project",
+				"C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+				"-skipCompile"
+			],
+			"stopAtEntry": false,
+			"externalConsole": true
+		},
+		{
+			"type": "coreclr",
+			"name": "MyProject|Game.Windows.Release|x64 (C#)",
+			"request": "launch",
+			"preLaunchTask": "MyProject|Game.Windows.Release|x64",
+			"cwd": "C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+			"program": "C:\\Program Files (x86)\\Flax\\Flax_1.7.6404\\Binaries\\Editor\\Win64\\Release\\FlaxEditor",
+			"args": [
+				"-project",
+				"C:\\Users\\x1398\\Documents\\Flax Projects\\MyProject",
+				"-skipCompile"
+			],
+			"stopAtEntry": false,
+			"externalConsole": true
+		},
+		{
+			"type": "coreclr",
+			"name": "MyProject (C# Attach Editor)",
+			"request": "attach",
+			"processName": "FlaxEditor"
+		}
+	]
+}
