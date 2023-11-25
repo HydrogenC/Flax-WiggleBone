@@ -364,3 +364,14 @@ FodyWeavers.xsd
 
 # Flax
 Cache/
+/Cache/Intermediate/BuilderRules.dll
+/Cache/Intermediate/BuilderRulesInfo.txt
+/Cache/Intermediate/Log.txt
+/Cache/AssetsCache.dat
+/Cache/icon.png
+/Cache/ProjectCache.dat
+/Cache/Projects/Flax.vcxproj
+/Cache/Projects/Flax.vcxproj.filters
+/Cache/Projects/MyProject.vcxproj
+/Cache/Projects/MyProject.vcxproj.filters
+/Cache/WindowsLayout.xml
