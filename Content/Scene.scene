@@ -223,7 +223,11 @@
 			"ParentID": "596039644b03ed680485c0a4dc4c7ebc",
 			"Stiffness": 200.0,
 			"Damping": 2.0,
-			"TargetNode": 9
+			"TargetNodes": [
+				7,
+				8,
+				9
+			]
 		}
 	]
 }

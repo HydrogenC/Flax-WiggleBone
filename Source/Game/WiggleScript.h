@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <string>
+#include <algorithm>
 #include <Engine/Scripting/Script.h>
 #include <Engine/Engine/Time.h>
 #include <Engine/Level/Actors/AnimatedModel.h>
@@ -19,7 +20,7 @@ API_CLASS() class GAME_API WiggleScript : public Script
 	API_FIELD() float AccelerationFactor = 0.005;
 	API_FIELD() float Damping = 1;
 	API_FIELD() int HangNode = -1;
-	API_FIELD() int TargetNode = 1;
+	API_FIELD() Array<int> TargetNodes;
 
 	// [Script]
 	void OnEnable() override;
@@ -30,24 +31,20 @@ private:
 	AnimatedModel* model;
 	float totalTime = 0;
 
+	// Offset matrix of target from hang node in hang node space
+	Array<Matrix> offsetMatrices;
 	// normal vector in hang node space
-	Vector3 normalVector;
+	Array<Vector3> normalVectors;
 
-	Vector3 velocity = Vector3::Zero;
 	Vector3 hangPointPrevPos;
 	Vector3 hangPointPrevVel = Vector3::Zero;
 	Vector3 hangPointAcc = Vector3::Zero;
 
 	// Length is angle, direction is direction
-	Vector3 angularVelocity = Vector3::Zero;
-	Vector3 angle = Vector3::Zero;
-
-	int length;
-	// Offset matrix of target from hang node in hang node space
-	Matrix offsetMatrix;
+	Array<Vector3> angularVelocities;
+	Array <Vector3> angles;
 
 	void ProcessInput(float delta);
-	void SolvePosition(Matrix& trans, const Matrix& parentTrans);
-	void SolvePhysics(const Vector3& gravity, float delta);
+	void SolvePhysics(const Vector3& gravity, int index, float delta);
 	void UpdateAcceleration(const Vector3& hangPointPos, const Matrix& worldToLocal, float delta);
 };

@@ -13,7 +13,7 @@ void WiggleScript::OnEnable()
 	model = (AnimatedModel*)GetActor();
 	auto& nodes = model->SkinnedModel->Skeleton.Nodes;
 	if (HangNode < 0) {
-		HangNode = nodes[TargetNode].ParentIndex;
+		HangNode = nodes[TargetNodes[0]].ParentIndex;
 	}
 
 	Array<Matrix> mats;
@@ -21,13 +21,30 @@ void WiggleScript::OnEnable()
 	Matrix worldMat;
 	model->GetLocalToWorldMatrix(worldMat);
 	hangPointPrevPos = (mats[HangNode] * worldMat).GetTranslation();
-	Matrix invHangNode = Matrix::Invert(mats[HangNode]);
-	auto posOffset = mats[HangNode].GetTranslation() - mats[TargetNode].GetTranslation();
-	posOffset.Normalize();
-	Vector3::TransformNormal(posOffset, invHangNode, normalVector);
 
-	offsetMatrix = mats[TargetNode] * invHangNode;
-	DebugLog::Log(String::Format(L"Offset matrix: {}", offsetMatrix));
+	offsetMatrices.Resize(TargetNodes.Count());
+	normalVectors.Resize(TargetNodes.Count());
+
+	angles.Resize(TargetNodes.Count());
+	angularVelocities.Resize(TargetNodes.Count());
+	std::fill(angles.begin(), angles.end(), Vector3::Zero);
+	std::fill(angularVelocities.begin(), angularVelocities.end(), Vector3::Zero);
+
+	// For convertion from actor space to parent space
+	Matrix invPrevNode = Matrix::Invert(mats[HangNode]);
+	Vector3 prevNodePos = mats[HangNode].GetTranslation();
+
+	for (int i=0;i<TargetNodes.Count();i++)
+	{
+		auto currentNodePos = mats[TargetNodes[i]].GetTranslation();
+		auto posOffset = prevNodePos - currentNodePos;
+		posOffset.Normalize();
+		Vector3::TransformNormal(posOffset, invPrevNode, normalVectors[i]);
+		offsetMatrices[i] = mats[TargetNodes[i]] * invPrevNode;
+
+		prevNodePos = currentNodePos;
+		invPrevNode = Matrix::Invert(mats[TargetNodes[i]]);
+	}
 }
 
 void WiggleScript::OnDisable()
@@ -46,66 +63,49 @@ void WiggleScript::OnUpdate()
 
 	Matrix localToWorld;
 	model->GetLocalToWorldMatrix(localToWorld);
-
-	// auto pos = mats[TargetNode].GetTranslation();
-	// DebugLog::Log(String::Format(L"Pos: {}", pos));
-	auto intendedTrans = offsetMatrix * mats[HangNode];
-
 	Matrix worldToLocal;
 	Matrix::Invert(localToWorld, worldToLocal);
-	
+
 	Vector3 hangPointPosWorld;
 	Vector3::Transform(mats[HangNode].GetTranslation(), localToWorld, hangPointPosWorld);
-	DebugLog::Log(String::Format(L"HangPoint Pos World: {}", hangPointPosWorld));
 	UpdateAcceleration(hangPointPosWorld, worldToLocal, deltaTime);
-	DebugLog::Log(String::Format(L"HangPointAcc: {}", hangPointAcc));
 
 	Vector3 localGravity;
 	Vector3::TransformNormal(Physics::GetGravity(), worldToLocal, localGravity);
 
-	SolvePhysics(0.01 * localGravity, deltaTime);
-	angle = Float3::ClampLength(angle + angularVelocity * deltaTime, PI / 3);
-	auto axis = Vector3::Cross(angle, normalVector);
-	axis.Normalize();
+	Matrix prevNodeTrans= mats[HangNode];
+	for (int i = 0; i < TargetNodes.Count(); i++)
+	{
+		auto intendedTrans = offsetMatrices[i] * prevNodeTrans;
+		SolvePhysics(0.01 * localGravity, i, deltaTime);
 
-	DebugLog::Log(String::Format(L"Angular Velocity: {}", angularVelocity));
-	DebugLog::Log(String::Format(L"Angle: {}", angle));
-	mats[TargetNode] = Matrix::RotationAxis(axis, angle.Length()) * intendedTrans;
+		angles[i] = Float3::ClampLength(angles[i] + angularVelocities[i] * deltaTime, PI / 3);
+		auto axis = Vector3::Cross(angles[i], normalVectors[i]);
+		axis.Normalize();
+		mats[TargetNodes[i]] = Matrix::RotationAxis(axis, angles[i].Length()) * intendedTrans;
+		prevNodeTrans = mats[TargetNodes[i]];
+	}
 
 	// mats[TargetNode] = prevMatrix * Matrix::Translation(velocity * deltaTime);
-
 	model->SetCurrentPose(mats);
-
 	ProcessInput(deltaTime);
 }
 
-/*
-void WiggleScript::LookAtParent(Matrix& trans, const Matrix& parentTrans)
-{
-	auto upVector = trans.GetUp();
-	auto toParentVector = parentTrans.GetTranslation() - trans.GetTranslation();
-	auto angle = Vector3::Angle(-upVector, toParentVector);
-	auto axis = Vector3::Cross(upVector, toParentVector);
-	axis.Normalize();
-	trans *= Matrix::RotationAxis(axis, angle);
-}
-*/
-
-void WiggleScript::SolvePhysics(const Vector3& gravity, float delta)
+void WiggleScript::SolvePhysics(const Vector3& gravity, int index, float delta)
 {
 	// F = kx
-	auto acceleration = -Stiffness * angle;
+	auto acceleration = -Stiffness * angles[index];
 	acceleration -= AccelerationFactor * hangPointAcc;
 	// Gravity
 	acceleration += gravity;
 	// Damping
 	// acceleration -= Damping * velocity;
 
-	auto angularAcc = Vector3::ProjectOnPlane(acceleration, normalVector);
-	angularAcc -= Damping * angularVelocity;
-	angularVelocity += angularAcc * delta;
+	// TODO: Add length spring
+	auto angularAcc = Vector3::ProjectOnPlane(acceleration, normalVectors[index]);
+	angularAcc -= Damping * angularVelocities[index];
+	angularVelocities[index] += angularAcc * delta;
 	// velocity += acceleration * delta;
-	DebugLog::Log(String::Format(L"Angular Acc: {}", angularAcc));
 }
 
 void WiggleScript::ProcessInput(float delta)
