@@ -183,6 +183,7 @@
     <Compile Include="Game.Gen.cs" />
     <Compile Include="Game\ExitOnEsc.cs" />
     <Compile Include="Game\FreeCamera.cs" />
+    <Compile Include="Game\ObjectMove.cs" />
     <Compile Visible="false" Include="C:\Users\x1398\Documents\Flax Projects\MyProject\Cache\Intermediate\GameEditorTarget\Windows\x64\Debug\Game\Game.Bindings.Gen.cs" />
     <Compile Visible="false" Include="C:\Users\x1398\Documents\Flax Projects\MyProject\Cache\Intermediate\GameEditorTarget\Windows\x64\Development\Game\Game.Bindings.Gen.cs" />
     <Compile Visible="false" Include="C:\Users\x1398\Documents\Flax Projects\MyProject\Cache\Intermediate\GameEditorTarget\Windows\x64\Release\Game\Game.Bindings.Gen.cs" />
