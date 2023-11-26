@@ -8,9 +8,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flax-WiggleBone", "Cache\Pr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flax", "Cache\Projects\Flax.vcxproj", "{CB3538B5-D901-4678-930A-F8B3809D4BD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Source\Game.csproj", "{FF14ABF3-9A25-4F50-8B2B-401DEFCB9170}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game", "Source\Game.csproj", "{FF14ABF3-9A25-4F50-8B2B-401DEFCB9170}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildScripts", "Cache\Projects\BuildScripts.csproj", "{828A1980-5133-4E17-AA6C-15F668CDACBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildScripts", "Cache\Projects\BuildScripts.csproj", "{828A1980-5133-4E17-AA6C-15F668CDACBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -57,6 +57,14 @@ public class ObjectMove : Script
         {
             speed += new Vector3(0, 0, -1);
         }
+        if (Input.GetKey(KeyboardKeys.Y))
+        {
+            speed += new Vector3(0, 1, 0);
+        }
+        if (Input.GetKey(KeyboardKeys.I))
+        {
+            speed += new Vector3(0, -1, 0);
+        }
         speed.Normalize();
         speed *= MoveSpeed;
 

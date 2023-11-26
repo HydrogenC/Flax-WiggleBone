@@ -17,9 +17,11 @@ API_CLASS() class GAME_API WiggleScript : public Script
 	DECLARE_SCRIPTING_TYPE(WiggleScript);
 
 	API_FIELD() float Stiffness = 100;
+	API_FIELD() float Damping = 1;
+	API_FIELD() float AngularStiffness = 100;
+	API_FIELD() float AngularDamping = 1;
 	API_FIELD() float GravityFactor = 0.01;
 	API_FIELD() float AccelerationFactor = 0.005;
-	API_FIELD() float Damping = 1;
 	API_FIELD(Attributes = "Tooltip(\"Index of head of chain, guarantee that it is an super-parent of tail\")") 
 		int ChainHead = -1;
 	API_FIELD(Attributes = "Tooltip(\"Index of tail of chain\")") 
@@ -45,9 +47,12 @@ private:
 	Vector3 hangPointPrevVel = Vector3::Zero;
 	Vector3 hangPointAcc = Vector3::Zero;
 
-	// Angle and a_velocity in parent space
+	// Angle and angularVelocity in parent space
 	Array<Vector3> angularVelocities;
-	Array <Vector3> angles;
+	Array<Vector3> angles;
+	// delta-x and radialVelocity in parent space
+	Array<Real> deltaLengths;
+	Array<Real> radialVelocities;
 
 	void SolvePhysics(const Vector3& gravity, int index, float delta);
 	void UpdateAcceleration(const Vector3& hangPointPos, const Matrix& worldToLocal, float delta);

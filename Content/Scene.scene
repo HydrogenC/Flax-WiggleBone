@@ -195,12 +195,6 @@
 					"X": 311.44659423828127,
 					"Y": 499.27032470703127,
 					"Z": 40.014434814453128
-				},
-				"Orientation": {
-					"X": 0.17216259241104127,
-					"Y": -0.022665636613965036,
-					"Z": 0.1285432130098343,
-					"W": 0.9763826131820679
 				}
 			},
 			"StaticFlags": 4,
@@ -221,8 +215,9 @@
 			"ID": "637724424a4fa91a5c541191718bfd3b",
 			"TypeName": "Game.WiggleScript",
 			"ParentID": "596039644b03ed680485c0a4dc4c7ebc",
-			"Stiffness": 200.0,
-			"Damping": 10.0,
+			"Damping": 2.0,
+			"AngularStiffness": 200.0,
+			"AngularDamping": 10.0,
 			"ChainHead": 6,
 			"ChainTail": 9
 		},
